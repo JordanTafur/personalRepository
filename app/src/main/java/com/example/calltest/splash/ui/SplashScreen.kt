@@ -1,61 +1,28 @@
 package com.example.calltest.splash.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.calltest.R
 import com.example.calltest.navigation.AppScreens
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    val viewModel = viewModel<SplashViewModel>()
+    val splashViewModel: SplashViewModel = hiltViewModel()
+    val showHomeScreen: Boolean by splashViewModel.showHomeScreen.observeAsState(initial = false)
 
-    if (viewModel.showHomeScreen){
+    if (showHomeScreen) {
         navController.popBackStack()
         navController.navigate(AppScreens.HomeScreen.route)
-    }else Splash()
-
-//    LaunchedEffect(key1 = true){
-//        delay(5000)
-//
-//    }
-//
-//    Splash()
-}
-
-@Composable
-fun Splash() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "Logo",
-            modifier = Modifier.size(200.dp, 200.dp)
-        )
-        Text(
-            "¡Bienvenid@s a call test!",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-    }
+    } else Splash()
 }
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -63,3 +30,14 @@ fun Splash() {
 fun SplashScreenPreview() {
     Splash()
 }
+
+@Composable
+fun Splash() {
+    Image(
+        painter = painterResource(id = R.drawable.splashbg),
+        contentDescription = "Logo",
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    )
+}
+
