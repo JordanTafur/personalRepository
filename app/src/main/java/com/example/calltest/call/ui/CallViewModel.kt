@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.calltest.call.domain.StartRingToneUseCase
 import com.example.calltest.call.domain.StopRingToneUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +20,7 @@ class CallViewModel @Inject constructor(
     private val startRingToneUseCase: StartRingToneUseCase,
     private val stopRingToneUseCase: StopRingToneUseCase
 ) : ViewModel() {
+    private var job: Job? = null
     private var countdownSeconds by mutableIntStateOf(5)
 
     private var _countdownFinished = MutableLiveData<Boolean>()
@@ -33,25 +35,27 @@ class CallViewModel @Inject constructor(
     private var _finish = MutableLiveData<Boolean>()
     val finish: LiveData<Boolean> = _finish
 
-    fun reset() {
-        countdownSeconds = 5
-        _countdownFinished.value = false
-        stopRingToneUseCase()
-    }
-
     fun startCountdown() {
-        val coroutineScope = viewModelScope
-        coroutineScope.launch {
+         job = viewModelScope.launch {
             while (countdownSeconds > 0) {
                 delay(1000) // Espera un segundo
                 countdownSeconds--
             }
+
             _countdownFinished.value = true
         }
     }
 
+    fun stopCountdown() {
+        job?.cancel()
+    }
+
     fun startRingTone() {
         startRingToneUseCase()
+    }
+
+    fun stopRingTone(){
+        stopRingToneUseCase()
     }
 
     fun showModal() {

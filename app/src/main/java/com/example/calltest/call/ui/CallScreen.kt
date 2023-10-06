@@ -63,7 +63,7 @@ fun Finish(callViewModel: CallViewModel, navController: NavHostController) {
     DisposableEffect(Unit) {
         navController.popBackStack()
         onDispose {
-            callViewModel.reset()
+           callViewModel.stopRingTone()
         }
     }
 }
@@ -172,6 +172,8 @@ fun CallScreen2(callViewModel: CallViewModel, navController: NavHostController) 
     }
 
     if (showModal) {
+        callViewModel.stopCountdown()
+        callViewModel.stopRingTone()
         ShowModal(isAnswerButtonReachedTop) {
             callViewModel.dismissModal()
             callViewModel.finish()

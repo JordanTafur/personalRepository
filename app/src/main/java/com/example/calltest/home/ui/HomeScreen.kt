@@ -42,20 +42,26 @@ fun HomeScreenInfo(navController: NavHostController) {
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
+    }
 
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(95.dp)
+    ){
         Icon(
             imageVector = Icons.Default.Phone,
             contentDescription = "Contestar",
             modifier = Modifier
                 .size(100.dp)
                 .clip(shape = CircleShape)
-                .border(1.dp, Color.White, CircleShape)
-                .background(Color.Black)
-                .align(Alignment.BottomCenter)
+                .border(2.dp, Color.Black, CircleShape)
+                .background(Color.White)
                 .padding(16.dp)
-                .clickable { navController.navigate(AppScreens.CallScreen.route) },
-            tint = Color.White,
-            )
+                .clickable { navController.navigate(AppScreens.CallScreen.route) }
+                .align(Alignment.BottomCenter), // Cambio de Alignment.BottomStart a Alignment.CenterStart,
+            tint = Color.Black
+        )
     }
 }
 
