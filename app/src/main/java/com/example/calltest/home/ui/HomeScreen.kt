@@ -37,7 +37,7 @@ fun HomeScreenInfo(navController: NavHostController) {
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.home_screen),
+            painter = painterResource(id = R.drawable.home_new),
             contentDescription = "HomeScreen",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -53,13 +53,13 @@ fun HomeScreenInfo(navController: NavHostController) {
             imageVector = Icons.Default.Phone,
             contentDescription = "Contestar",
             modifier = Modifier
-                .size(100.dp)
+                .size(80.dp)
                 .clip(shape = CircleShape)
                 .border(2.dp, Color.Black, CircleShape)
                 .background(Color.White)
                 .padding(16.dp)
                 .clickable { navController.navigate(AppScreens.CallScreen.route) }
-                .align(Alignment.BottomCenter), // Cambio de Alignment.BottomStart a Alignment.CenterStart,
+                .align(Alignment.BottomCenter),
             tint = Color.Black
         )
     }
